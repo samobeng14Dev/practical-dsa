@@ -1,67 +1,67 @@
-
-# Python Code: Insert Node at Specific Position in a Singly Linked List
+# Node class: represents a single element in the linked list
 class Node:
-    def __init__(self,data):
-        self.next=None
-        self.data=data
+    def __init__(self, data):
+        self.data = data      # Store the actual value of the node
+        self.next = None      # Pointer to the next node (initially None)
 
+
+# LinkedList class: manages nodes and provides operations
 class LinkedList:
     def __init__(self):
-        self.head=None
+        self.head = None      # Head points to the first node in the list
 
-    def append(self,data):
-        new_node=Node(data)
-        if not self.head:
-            self.head=new_node
+    # Append: add a new node at the end of the list
+    def append(self, data):
+        new_node = Node(data)   # Create a new node
+        if not self.head:       # If list is empty, new node becomes head
+            self.head = new_node
             return
 
-        last=self.head
-        while last.next:
-            last=last.next
-        last.next=new_node
+        # Otherwise, traverse to the last node
+        last = self.head
+        while last.next:        # Keep moving until last.next is None
+            last = last.next
+        last.next = new_node    # Link the last node to the new node
 
-    # Special case: inserting at the head (index 0)
-
-    # If the index is 0, we’re inserting at the beginning.
-    # The new node’s next points to the current head.
-    # Then we update self.head to point to the new node.
-    def insert(self,index,data):
-        new_node=Node(data)
-        if index==0:
-            new_node.next=self.head
-            self.head=new_node
-
-    def insert_at(self, index, data):
-        new_node = Node(data)  # Step 1: Create a new node with the given data
-
-        # Special case: inserting at the head (index 0)
+    # Insert: special case for inserting at the head (index 0)
+    def insert(self, index, data):
+        new_node = Node(data)
         if index == 0:
-            new_node.next = self.head  # Link new node to the current head
-            self.head = new_node  # Update head to point to the new node
+            new_node.next = self.head   # New node points to current head
+            self.head = new_node        # Head is updated to new node
+
+    # Insert_at: insert a node at a specific index
+    def insert_at(self, index, data):
+        new_node = Node(data)   # Step 1: Create the new node
+
+        # Step 2: Handle insertion at the head
+        if index == 0:
+            new_node.next = self.head   # Link new node to current head
+            self.head = new_node        # Update head to new node
             return
 
-        # Step 2: Traverse to the node just before the target index
-        current = self.head  # Start from the head
-        count = 0  # Position counter
+        # Step 3: Traverse to the node just before the target index
+        current = self.head     # Start traversal from the head
+        count = 0               # Position counter
         while current and count < index - 1:
-            current = current.next  # Move to the next node
-            count += 1  # Increase step count
+            current = current.next   # Move to the next node
+            count += 1               # Increment position counter
 
-        # Step 3: If current is None, it means index is out of bounds
+        # Step 4: Validate index (if current is None, index is invalid)
         if not current:
             raise IndexError("Index out of bounds")
 
-        # Step 4: Rewire pointers to insert the new node
-        new_node.next = current.next  # New node points to the next node in the chain
-        current.next = new_node  # Current node now points to the new node
+        # Step 5: Rewire pointers to insert the new node
+        new_node.next = current.next   # New node points to the next node
+        current.next = new_node        # Current node points to the new node
 
+    # Display: print the linked list in a readable format
     def display(self):
-        current =self.head
+        current = self.head
         while current:
             print(current.data, end=' -> ')
-            current=current.next
-        print ('None')
-
+            current = current.next
+        print('None')
 
 
 # Example usage
@@ -74,9 +74,7 @@ ll.append(20)
 print("Before insertion:")
 ll.display()
 
-ll.insert_at(2, 30)  # Insert 30 at index 2
+ll.insert_at(2, 30)  # Insert 30 at index 2 (between 10 and 15)
 
 print("After insertion:")
 ll.display()
-
-
